@@ -19,7 +19,7 @@ import { getCategories } from '../../actions/category';
 import { create, getTags } from '../../actions/tag';
 import EmailEditor from 'react-email-editor';
 import '../../node_modules/react-quill/dist/quill.snow.css';
-import Toggle from '../Toggle';
+import Toggle from '../toggle';
 
 
 
@@ -187,7 +187,7 @@ const CreateBlog = ({ router }) => {
         e.preventDefault();
         // console.log('ready to publishBlog');
 
-        
+
         createBlog(formData, token).then(data => {
             if (data.error) {
                 setValues({ ...values, error: data.error, loading: false });
@@ -222,25 +222,25 @@ const CreateBlog = ({ router }) => {
 
 
 
-    const handleEmailEditorData = ()=>{
+    const handleEmailEditorData = () => {
         emailEditorRef.current.editor.exportHtml((data) => {
             const { design, html } = data;
 
             let parser = new DOMParser();
             let dom_document = parser.parseFromString(html, "text/html");
             let body_element = dom_document.getElementsByTagName("table")[0];
-            let str =JSON.stringify(body_element.innerHTML).replace(/(<([^>]+)>)/ig, '');
-         
-            str = JSON.parse(str).replace(/(\r\n|\n|\r)/gm, "")
-            str =str.replace(/\s+/g,' ').trim()
- 
-           
-            setBody(html);
-            
-            formData.set('body', html); 
-            formData.set('htmlString',str)
+            let str = JSON.stringify(body_element.innerHTML).replace(/(<([^>]+)>)/ig, '');
 
-            formData.set('editor',"EmailEditor")
+            str = JSON.parse(str).replace(/(\r\n|\n|\r)/gm, "")
+            str = str.replace(/\s+/g, ' ').trim()
+
+
+            setBody(html);
+
+            formData.set('body', html);
+            formData.set('htmlString', str)
+
+            formData.set('editor', "EmailEditor")
             if (typeof window !== 'undefined') {
                 localStorage.setItem('Emailbody', JSON.stringify(html));
             }
@@ -250,9 +250,9 @@ const CreateBlog = ({ router }) => {
     // Quil data 
     const handlebodydata = (e) => {
         setBody(e);
-     
+
         formData.set('body', e);
-        formData.set('editor',"Quill")
+        formData.set('editor', "Quill")
         if (typeof window !== 'undefined') {
             localStorage.setItem('blog', JSON.stringify(e));
         }
@@ -263,7 +263,7 @@ const CreateBlog = ({ router }) => {
         const string = JSON.stringify(jsondata)
 
         formData.set('body', string);
-        formData.set('editor',"Editorjs")
+        formData.set('editor', "Editorjs")
         formData.set('html', htmldata);
         if (typeof window !== 'undefined') {
             localStorage.setItem('jsonblog', string);
@@ -532,7 +532,7 @@ const CreateBlog = ({ router }) => {
             {EmailEditorState && (
                 <>
                     <Box>
-                    {showError()}
+                        {showError()}
                         {showSuccess()}
                         {showLoading()}
                         <Paper>
