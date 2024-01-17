@@ -26,22 +26,22 @@ const Signin = ({ router }) => {
 
                 <div className="row">
                     <div className="col-md-6 offset-md-3">
-
-                        <Paper
-                            sx={{
-                                p: 2,
-                                margin: 'auto',
-                                maxWidth: 700,
-                                flexGrow: 1,
-                                marginTop: 1,
-                                marginBottom: 3,
-                                backgroundColor: (theme) =>
-                                    theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-                            }}
-                        >
-                            <SigninComponent />
-                        </Paper>
-
+                        
+                    <Paper
+      sx={{
+        p: 2,
+        margin: 'auto',
+        maxWidth:700,
+        flexGrow: 1,
+        marginTop:1,
+        marginBottom:3,
+        backgroundColor: (theme) =>
+          theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+      }}
+    >
+          <SigninComponent />
+        </Paper>
+                      
                     </div>
                 </div>
             </div>

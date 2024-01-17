@@ -1,82 +1,89 @@
-import MenuIcon from "@mui/icons-material/Menu";
-import { Button } from "@mui/material";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import InputBase from "@mui/material/InputBase";
-import Link from "@mui/material/Link";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import {
-  alpha,
-  createTheme,
-  styled,
-  ThemeProvider,
-} from "@mui/material/styles";
-import Toolbar from "@mui/material/Toolbar";
+import MenuIcon from '@mui/icons-material/Menu';
+import { Button } from '@mui/material';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import InputBase from '@mui/material/InputBase';
+import Link from '@mui/material/Link';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import { alpha, createTheme, styled, ThemeProvider } from '@mui/material/styles';
+import Toolbar from '@mui/material/Toolbar';
 //import Link from 'next/link';
-import Router from "next/router";
-import NProgress from "nprogress";
-import React, { useState } from "react";
-import ".././node_modules/nprogress/nprogress.css";
-import { isAuth, signout } from "../actions/auth";
-import { APP_NAME } from "../config";
-import SearchBar from "./Search/SearchBar";
+import Router from 'next/router';
+import NProgress from 'nprogress';
+import React, { useState } from 'react';
+import '.././node_modules/nprogress/nprogress.css';
+import { isAuth, signout } from '../actions/auth';
+import { APP_NAME } from '../config';
+import SearchBar from './Search/SearchBar';
 
-Router.onRouteChangeStart = (url) => NProgress.start();
-Router.onRouteChangeComplete = (url) => NProgress.done();
-Router.onRouteChangeError = (url) => NProgress.done();
 
-const SearchField = styled("div")(({ theme }) => ({
-  position: "relative",
+Router.onRouteChangeStart = url => NProgress.start();
+Router.onRouteChangeComplete = url => NProgress.done();
+Router.onRouteChangeError = url => NProgress.done();
+
+
+
+
+const SearchField = styled('div')(({ theme }) => ({
+  position: 'relative',
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
+  '&:hover': {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(3),
-    width: "auto",
+    width: 'auto',
   },
 }));
 
-const SearchIconWrapper = styled("div")(({ theme }) => ({
+const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 }));
+
 
 const darkTheme = createTheme({
   palette: {
-    mode: "dark",
+    mode: 'dark',
     primary: {
-      main: "#ffffff",
+      main: '#ffffff',
     },
   },
 });
 
+
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
+  color: 'inherit',
+  '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '20ch',
     },
   },
 }));
 
+
+
+
+
+
 const Header = () => {
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -100,20 +107,21 @@ const Header = () => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const menuId = "primary-search-account-menu";
+  const menuId = 'primary-search-account-menu';
+
 
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
+        vertical: 'top',
+        horizontal: 'right',
       }}
       id={menuId}
       keepMounted
       transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
+        vertical: 'top',
+        horizontal: 'right',
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
@@ -123,65 +131,69 @@ const Header = () => {
     </Menu>
   );
 
-  const mobileMenuId = "primary-search-account-menu-mobile";
+
+  const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
+        vertical: 'top',
+        horizontal: 'right',
       }}
       id={mobileMenuId}
       keepMounted
       transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
+        vertical: 'top',
+        horizontal: 'right',
       }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <Button href="/blogs">Blogs</Button>
+    >   
+      <MenuItem >
+        <Button href="/blogs" >Blogs</Button>
+
       </MenuItem>
-      <MenuItem>
-        <Button href="/contact"> Contact Us</Button>
+      <MenuItem >
+        <Button href='/contact'> Contact Us</Button>
+
       </MenuItem>
 
       {!isAuth() && (
         <>
-          <MenuItem>
-            <Button href="/signin">Login</Button>{" "}
-          </MenuItem>
-          <MenuItem>
-            <Button href="/signup">Register</Button>{" "}
-          </MenuItem>
+          <MenuItem >
+            <Button href='/signin'>Login</Button> </MenuItem>
+          <MenuItem >
+            <Button href='/signup'>Register</Button> </MenuItem>
         </>
       )}
 
       {isAuth() && isAuth().role === 0 && (
-        <MenuItem>
-          <Button href="/user"> {`${isAuth().name}'s Dashboard`}</Button>
-        </MenuItem>
+
+        <MenuItem >
+
+          <Button href='/user'> {`${isAuth().name}'s Dashboard`}</Button></MenuItem>
+
       )}
 
       {isAuth() && isAuth().role === 1 && (
-        <MenuItem>
-          <Button href="/admin"> {`${isAuth().name}'s Dashboard`}</Button>
-        </MenuItem>
+        <MenuItem >
+
+          <Button href='/admin'> {`${isAuth().name}'s Dashboard`}</Button></MenuItem>
       )}
 
       {isAuth() && (
-        <MenuItem>
-          <Button onClick={() => signout(() => Router.replace(`/signin`))}>
-            Logout
-          </Button>
+
+        <MenuItem >
+          <Button onClick={() => signout(() => Router.replace(`/signin`))}>Logout</Button>
         </MenuItem>
       )}
-      <MenuItem>
-        <Button href="/user/crud/blog">Write a blog</Button>
+      <MenuItem >
+        <Button href='/user/crud/blog'>Write a blog</Button>
       </MenuItem>
     </Menu>
   );
+
+
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -190,10 +202,12 @@ const Header = () => {
   };
 
   return (
+
     <ThemeProvider theme={darkTheme}>
       <React.Fragment>
+
         <Box sx={{ flexGrow: 1 }}>
-          <AppBar position="fixed">
+          <AppBar position="fixed" >
             <Toolbar>
               <IconButton
                 size="large"
@@ -201,26 +215,33 @@ const Header = () => {
                 color="inherit"
                 aria-label="open drawer"
                 sx={{ mr: 2 }}
-                href="/"
+                href='/'
               >
                 {/* <MenuIcon /> */}
 
-                <img alt="gloom" src="/static/images/favicon.png" />
+
+
+                <img alt='gloom' src='/static/images/favicon.png' />
+
               </IconButton>
 
-              <Button href="/">{APP_NAME}</Button>
+
+              <Button href='/'>{APP_NAME}</Button>
+
+
+
 
               <Box sx={{ flexGrow: 1 }} />
-              <Box
-                sx={{
-                  display: { xs: "none", md: "flex" },
-                  flexWrap: "wrap",
-                  justifyContent: "center",
-                  typography: "body1",
-                  "& > :not(style) + :not(style)": {
-                    ml: 2,
-                  },
-                }}
+              <Box sx={{
+                display: { xs: 'none', md: 'flex' },
+                flexWrap: 'wrap',
+                justifyContent: 'center',
+                typography: 'body1',
+                '& > :not(style) + :not(style)': {
+                  ml: 2,
+                },
+              }}
+
               >
                 <Button href="/blogs"> Blogs</Button>
 
@@ -228,43 +249,53 @@ const Header = () => {
 
                 {!isAuth() && (
                   <React.Fragment>
-                    <Button href="/signin">Login</Button>
-                    <Button href="/signup">Register</Button>
+                    <Button href="/signin">
+                      Login
+                    </Button>
+                    <Button href="/signup" >
+                      Register
+                    </Button >
                   </React.Fragment>
                 )}
 
                 {isAuth() && isAuth().role === 0 && (
-                  <Button href="/user">{`${isAuth().name}'s Dashboard`}</Button>
+
+                  <Button href="/user">
+                    {`${isAuth().name}'s Dashboard`}
+                  </Button >
+
                 )}
 
                 {isAuth() && isAuth().role === 1 && (
-                  <Button
-                    onClick={() => {
-                      Router.replace(`/admin`);
-                    }}
-                  >
+
+                  <Button onClick={() => {
+                    Router.replace(`/admin`)
+
+                  }}>
                     {`${isAuth().name}'s Dashboard`}
-                  </Button>
+                  </Button >
+
                 )}
 
                 {isAuth() && (
-                  <Button
-                    style={{ cursor: "pointer" }}
-                    onClick={() => signout(() => Router.replace(`/signin`))}
-                  >
+
+                  <Button style={{ cursor: 'pointer' }} onClick={() => signout(() => Router.replace(`/signin`))}>
                     Signout
-                  </Button>
+                  </Button >
+
                 )}
 
-                <Button
-                  onClick={() => {
-                    Router.replace(`/user/crud/blog`);
-                  }}
-                >
+
+                <Button onClick={() => {
+                  Router.replace(`/user/crud/blog`)
+
+                }}>
+
                   Write a blog
-                </Button>
+
+                </Button >
               </Box>
-              <Box sx={{ display: { xs: "flex", md: "none" } }}>
+              <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                 <IconButton
                   size="large"
                   aria-label="show more"
@@ -281,6 +312,7 @@ const Header = () => {
           {renderMobileMenu}
           {renderMenu}
         </Box>
+
       </React.Fragment>
     </ThemeProvider>
   );

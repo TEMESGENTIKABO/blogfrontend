@@ -7,6 +7,8 @@ import {
   Typography,
 } from "@mui/material";
 import Link from "@mui/material/Link";
+//import Link from 'next/link';
+import ModeToggle from "../components/toggle"
 import Head from "next/head";
 import { withRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -20,87 +22,163 @@ import Homepagecard from "../components/blog/LatestBlogCards";
 import { MDBContainer, MDBRow, MDBCol } from "mdbreact";
 
 const Index = ({ router }) => {
-  const [categories, setCategories] = useState([]);
-  const [blogs, setBlogs] = useState([]);
-  const [latestBlogs, setLatestBlogs] = useState([]);
+  const [category, setCategories] = useState([]);
+  const [blogs, setblogs] = useState([]);
+  const [latestblog, setlatestblogs] = useState([]);
 
   const mainFeaturedPost = {
     title: APP_NAME,
     description: "Find What You Want",
     image: "https://source.unsplash.com/random/?library",
-    imageText: "Welcome to the World of Blogs, News, and Articles",
+    imageText: "Welcome to the World of Blogs,News and Article",
+    //linkText: 'Continue reading…',
   };
+
+  const [cat, setcat] = useState([]);
 
   useEffect(() => {
     getCategories().then((data) => {
-      if (data && data.error) {
-        console.error("Error fetching categories:", data.error);
-      } else if (data) {
+      if (data.error) {
+        console.log(data.error);
+      } else {
         setCategories(data);
+        setcat(data);
+        console.log(data.length, "len");
+        let len = data.length - 1;
 
         let array = [];
 
-        data.forEach((item, key) => {
+        data.map((item, key) => {
+          console.log(key, "key");
           singleCategoryForHome(item.name).then((data) => {
-            if (data && data.error) {
-              console.error("Error fetching category:", data.error);
-            } else if (data && data.blogs.length > 0) {
-              array.push(...data.blogs);
+            if (data.error) {
+              console.log(data.error);
+            } else {
+              if (data.blogs.length > 0) {
+                array.push(...data.blogs);
+              }
 
-              if (key === data.length - 1) {
-                setBlogs(array);
+              if (len == key) {
+                setblogs(array);
               }
             }
           });
         });
       }
     });
-
+<div className="fixed bottom-0 right-0 m-4">
+      <ModeToggle />
+    </div>
     let skip = 0;
     let limit = 4;
     listBlogsWithCategoriesAndTags(skip, limit).then((data) => {
-      console.log("Data from listBlogsWithCategoriesAndTags:", data);
-      if (data && !data.error) {
-        setLatestBlogs(data.blogs);
+      if (data.error) {
+        // console.log(data.error);
       } else {
-        console.error("Error fetching latest blogs:", data && data.error);
+        {
+          // blogs: data.blogs,
+          // categories: data.categories,
+          // tags: data.tags,
+          // totalBlogs: data.size,
+          // blogsLimit: limit,
+          // blogSkip: skip
+          setlatestblogs(data.blogs);
+        }
       }
     });
   }, []);
 
+  // useEffect(()=>{
+  //     let skip = 0;
+  //     let limit = 0;
+  //     return listBlogsWithCategoriesAndTags(skip, limit).then(data => {
+  //         if (data.error) {
+  //             console.log(data.error);
+  //         } else {
+
+  //             console.log(data.categories)
+  //               setcat(data.categories)
+
+  //         }
+  //     });
+
+  // },[])
+
   const showAllCategories = () => {
-    return categories.map((c, i) => (
-      <Link
-        key={i}
-        underline="none"
-        color="inherit"
-        noWrap
-        variant="body2"
-        href={`/categories/${c.slug}`}
-        sx={{
-          p: 1,
-          flexShrink: 0,
-          fontSize: "20px",
-          fontFamily: "Monospace",
-        }}
-      >
-        {c.name}
-      </Link>
+    return cat.map((c, i) => (
+      <>
+        <Link
+          underline="none"
+          color="inherit"
+          noWrap
+          key={i}
+          variant="body2"
+          href={`/categories/${c.slug}`}
+          sx={{
+            p: 1,
+            flexShrink: 0,
+            fontSize: "20px",
+            fontFamily: "Monospace",
+          }}
+        >
+          {c.name}
+        </Link>
+      </>
     ));
   };
 
-  const showLatestBlogs = () => {
-    return latestBlogs.map((blog, i) => (
-      <div key={i} style={{ padding: "10px" }}>
-        <div>
-          <Homepagecard blog={blog} />
+  const showlatestblogs = () => {
+    return latestblog.map((blog, i) => {
+      return (
+        <div key={i} style={{ padding: "10px" }}>
+          <div>
+            <Homepagecard blog={blog} />
+          </div>
         </div>
-      </div>
-    ));
+      );
+    });
   };
 
-  const head = () => <Head>{/* Your existing head content */}</Head>;
+  const head = () => (
+    <Head>
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1526259079521468"
+        crossorigin="anonymous"
+      ></script>
+      <title>
+        {" "}
+        {APP_NAME}|Find What You Want|Latest Blogs,Latest News,Latest Articles
+      </title>
+      <meta
+        name="description"
+        content="Welcome to the World of Blogs,News and Article"
+      />
+      <link rel="canonical" href={`${DOMAIN}${router.pathname}`} />
+      <meta property="og:title" content={` ${APP_NAME}|Find What You Want`} />
+      <meta
+        property="og:description"
+        content="Welcome to the World of Blogs,News and Article"
+      />
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content={`${DOMAIN}${router.pathname}`} />
+      <meta
+        property="og:site_name"
+        content={`${APP_NAME}|Find What You Want`}
+      />
 
+      <meta
+        property="og:image"
+        content={`${DOMAIN}/static/images/favicon.png`}
+      />
+      <meta
+        property="og:image:secure_url"
+        content={`${DOMAIN}/static/images/favicon.png`}
+      />
+      <meta property="og:image:type" content="image/jpg" />
+      <meta property="fb:app_id" content={`${FB_APP_ID}`} />
+    </Head>
+  );
   return (
     <React.Fragment>
       {head()}
@@ -121,7 +199,7 @@ const Index = ({ router }) => {
             <div className="row">
               <div className="col-md-12 text-center pt-4 pb-5">
                 <p className="lead">
-                  Welcome to the World of Blogs, News, and Articles
+                  Welcome to the World of Blogs,News and Article
                 </p>
               </div>
             </div>
@@ -144,14 +222,17 @@ const Index = ({ router }) => {
                 </Typography>
                 <Divider style={{ minWidth: "100%" }} />
 
-                {showLatestBlogs()}
+                {showlatestblogs()}
               </MDBCol>
               <MDBCol md="6">
-                <Bloglisthome blogs={blogs} categories={categories} />
+                <Bloglisthome blogs={blogs} categories={category} />
               </MDBCol>
             </MDBRow>
           </MDBContainer>
         </article>
+
+        {/* 
+                <Footer /> */}
       </Layout>
     </React.Fragment>
   );

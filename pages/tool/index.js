@@ -1,99 +1,102 @@
-import { withRouter } from "next/router";
-import React, { useState } from "react";
+import { withRouter } from 'next/router';
+import React, { useState } from 'react';
 
-import { Button } from "reactstrap";
-import { listBlogsWithCategoriesAndTags } from "../../actions/blog";
-import { DOMAIN } from "../../config";
+import { Button } from 'reactstrap';
+import { listBlogsWithCategoriesAndTags } from '../../actions/blog';
+import { DOMAIN } from '../../config';
 
-import Tablecomponent from "../../components/Tablecomponent";
-import Admin from "../../components/auth/Admin";
-import Layout from "../../components/Layout";
+import Tablecomponent from '../../components/Tablecomponent';
+import Admin from '../../components/auth/Admin';
+import Layout from '../../components/Layout';
 
-import Header from "../../components/Header";
+import Header from '../../components/Header';
 
 const BASE_URL = DOMAIN;
 
-const Blogs = ({
-  blogs,
-  categories,
-  tags,
-  totalBlogs,
-  blogsLimit,
-  blogSkip,
-  router,
-}) => {
-  let array = [];
-  let categoryurl = [];
-  let tagurl = [];
-  let blogsurl = [];
-  let searchresults = [];
+const Blogs = ({ blogs, categories, tags, totalBlogs, blogsLimit, blogSkip, router }) => {
+
+  let array = []
+  let categoryurl = []
+  let tagurl = []
+  let blogsurl = []
+  let searchresults = []
 
   blogs.map((blog, i) => {
     let obj = {
-      URL: `"${BASE_URL}/blogs/${blog.slug}"`,
 
-      Date: `"${new Date().toISOString()}"`,
-    };
+      "URL": `"${BASE_URL}/blogs/${blog.slug}"`,
+
+      "Date": `"${new Date().toISOString()}"`
+    }
 
     let obj1 = {
-      URL: `"${BASE_URL}/search?${blog.slug}"`,
 
-      Date: `"${new Date().toISOString()}"`,
-    };
+      "URL": `"${BASE_URL}/search?${blog.slug}"`,
 
-    blogsurl.push(obj);
-    searchresults.push(obj1);
+      "Date": `"${new Date().toISOString()}"`
+    }
 
-    array.push(obj1);
-    array.push(obj);
+
+    blogsurl.push(obj)
+    searchresults.push(obj1)
+
+    array.push(obj1)
+    array.push(obj)
   });
 
   categories.map((c, i) => {
+
     let obj = {
-      URL: `"${BASE_URL}/categories/${c.slug}"`,
-      Date: `"${new Date().toISOString()}"`,
-    };
+      "URL": `"${BASE_URL}/categories/${c.slug}"`,
+      "Date": `"${new Date().toISOString()}"`
+
+    }
 
     let obj1 = {
-      URL: `"${BASE_URL}/search?${c.slug}"`,
-      Date: `"${new Date().toISOString()}"`,
-    };
+      "URL": `"${BASE_URL}/search?${c.slug}"`,
+      "Date": `"${new Date().toISOString()}"`
+    }
 
-    array.push(obj1);
+    array.push(obj1)
 
-    array.push(obj);
+    array.push(obj)
 
-    categoryurl.push(obj);
-    searchresults.push(obj1);
+    categoryurl.push(obj)
+    searchresults.push(obj1)
+
   });
+
 
   tags.map((t, i) => {
     let obj = {
-      URL: `"${BASE_URL}/tags/${t.slug}"`,
-      Date: `"${new Date().toISOString()}"`,
-    };
+
+      "URL": `"${BASE_URL}/tags/${t.slug}"`,
+      "Date": `"${new Date().toISOString()}"`
+    }
 
     let obj1 = {
-      URL: `"${BASE_URL}/search?${t.slug}"`,
 
-      Date: `"${new Date().toISOString()}"`,
-    };
+      "URL": `"${BASE_URL}/search?${t.slug}"`,
 
-    array.push(obj1);
-    array.push(obj);
+      "Date": `"${new Date().toISOString()}"`
+    }
 
-    tagurl.push(obj);
-    searchresults.push(obj1);
+    array.push(obj1)
+    array.push(obj)
+
+    tagurl.push(obj)
+    searchresults.push(obj1)
+
   });
 
-  const convertToCSV = (arr) => {
-    const array = [Object.keys(arr[0])].concat(arr);
+  
 
-    const csv = array
-      .map((it) => {
-        return Object.values(it).toString();
-      })
-      .join("\n");
+  const convertToCSV = (arr) => {
+    const array = [Object.keys(arr[0])].concat(arr)
+
+    const csv = array.map(it => {
+      return Object.values(it).toString()
+    }).join('\n')
 
     var downloadLink = document.createElement("a");
     var blob = new Blob(["\ufeff", csv]);
@@ -104,67 +107,78 @@ const Blogs = ({
     document.body.appendChild(downloadLink);
     downloadLink.click();
     document.body.removeChild(downloadLink);
-  };
+
+  }
+
 
   const handledownload = () => {
+
     convertToCSV(array);
-  };
+
+  }
 
   const handlecategoryurl = () => {
-    convertToCSV(categoryurl);
-  };
+    convertToCSV(categoryurl)
+  }
 
   const handlesearchurl = () => {
-    convertToCSV(searchresults);
-  };
+    convertToCSV(searchresults)
+  }
 
   const handletagurl = () => {
-    convertToCSV(tagurl);
-  };
+    convertToCSV(tagurl)
+  }
 
   const handleblogsurl = () => {
-    convertToCSV(blogsurl);
-  };
+    convertToCSV(blogsurl)
+  }
+
 
   return (
-    <Layout>
-      <Admin>
-        <>
-          <Header />
-          <Button onClick={handledownload}> Download All URl</Button>
 
-          <Button onClick={handlecategoryurl}>
-            {" "}
-            Download only categoryurl
-          </Button>
 
-          <Button onClick={handletagurl}> Download only tag url</Button>
-          <Button onClick={handlesearchurl}> Download only search url</Button>
-          <Button onClick={handleblogsurl}> Download only blogs</Button>
+    
+    <Layout >
+    <Admin>
+    <>
+    <Header />
+      <Button onClick={handledownload}> Download All URl</Button>
 
-          <div style={{ padding: "20px" }}>
-            <Tablecomponent urllist={array} heading={"List Of All Urls"} />
-          </div>
+      <Button onClick={handlecategoryurl}> Download only categoryurl</Button>
 
-          <div style={{ padding: "20px" }}>
-            <Tablecomponent
-              urllist={categoryurl}
-              heading={"List Of All Category Url"}
-            />
-          </div>
+      <Button onClick={handletagurl}> Download  only tag url</Button>
+      <Button onClick={handlesearchurl}> Download only search url</Button>
+      <Button onClick={handleblogsurl}> Download only blogs</Button>
 
-          <div style={{ padding: "20px" }}>
-            <Tablecomponent urllist={tagurl} heading={"List Of All Tag Urls"} />
-          </div>
 
-          <div style={{ padding: "20px" }}>
-            <Tablecomponent
-              urllist={searchresults}
-              heading={"List Of All Search Urls"}
-            />
-          </div>
-        </>
-      </Admin>
+      <div style={{ padding: '20px' }}>
+        <Tablecomponent urllist={array} heading={"List Of All Urls"} />
+
+      </div>
+
+      <div style={{ padding: '20px' }}>
+        <Tablecomponent urllist={categoryurl} heading={"List Of All Category Url"} />
+
+      </div>
+
+      <div style={{ padding: '20px' }}>
+        <Tablecomponent urllist={tagurl} heading={"List Of All Tag Urls"} />
+
+      </div>
+
+      <div style={{ padding: '20px' }}>
+        <Tablecomponent urllist={searchresults} heading={"List Of All Search Urls"} />
+
+      </div>
+
+
+
+
+
+
+    </>
+
+    </Admin>
     </Layout>
   );
 };
@@ -172,7 +186,7 @@ const Blogs = ({
 Blogs.getInitialProps = () => {
   let skip = 0;
   let limit = 0;
-  return listBlogsWithCategoriesAndTags(skip, limit).then((data) => {
+  return listBlogsWithCategoriesAndTags(skip, limit).then(data => {
     if (data.error) {
       console.log(data.error);
     } else {
@@ -182,7 +196,7 @@ Blogs.getInitialProps = () => {
         tags: data.tags,
         totalBlogs: data.size,
         blogsLimit: limit,
-        blogSkip: skip,
+        blogSkip: skip
       };
     }
   });
