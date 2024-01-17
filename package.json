@@ -40,6 +40,7 @@
     "axios": "^1.6.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "draft-js": "^0.11.7",
     "editorjs-change-case": "^0.0.3",
     "editorjs-code-tool": "^1.0.4",
     "editorjs-drag-drop": "^1.1.13",
@@ -78,6 +79,7 @@
     "react-rounded-image": "^2.0.15",
     "react-share": "^5.0.3",
     "reactstrap": "^9.2.1",
+    "sitemap": "^7.1.1",
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7",
     "xhr2": "^0.2.1"
