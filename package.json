@@ -10,8 +10,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@editorjs/code": "^2.9.0",
     "@editorjs/embed": "^2.7.0",
+    "@editorjs/image": "^2.9.0",
+    "@editorjs/link": "^2.6.2",
+    "@editorjs/list": "^1.9.0",
     "@editorjs/table": "^2.3.0",
+    "@editorjs/warning": "^1.4.0",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.4",
