@@ -18,7 +18,7 @@ const MediumEditor = (props) => {
   const handleSave = useCallback(async () => {
     const savedData = await editorCore.current.save();
     props.editorjson(savedData, edjsParser(savedData.blocks));
-  }, [props, edjsParser]);
+  }, [props]);
 
   const handleReady = () => {
     const editor = editorCore.current._editorJS;

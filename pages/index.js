@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import Link from "@mui/material/Link";
 //import Link from 'next/link';
-import ModeToggle from "../components/toggle"
+//import ModeToggle from "../components/toggle"
 import Head from "next/head";
 import { withRouter } from "next/router";
 import React, { useEffect, useState } from "react";
