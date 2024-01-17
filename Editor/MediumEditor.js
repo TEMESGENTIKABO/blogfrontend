@@ -1,55 +1,42 @@
+import React, { useCallback, useRef } from "react";
+import { createReactEditorJS } from "react-editor-js";
 import DragDrop from 'editorjs-drag-drop';
 import edjsHTML from 'editorjs-html';
-import Parser from 'editorjs-viewer';
-import React from "react";
-import { createReactEditorJS } from "react-editor-js";
+import parser from 'editorjs-viewer';
 import { EDITOR_JS_TOOLS } from "./constants";
 
-
-
 const ReactEditorJS = createReactEditorJS();
-const edjsParser  = edjsHTML(); 
+const edjsParser = parser();
 
-const MediumEditor=(props)=> {
+const MediumEditor = (props) => {
+  const editorCore = useRef(null);
 
-  const editorCore = React.useRef(null)
-  const handleInitialize = React.useCallback(async(instance) => {
-    editorCore.current = instance
-  }, [])
-  
-  const handleSave = React.useCallback(async() => {
+  const handleInitialize = useCallback(async (instance) => {
+    editorCore.current = instance;
+  }, []);
+
+  const handleSave = useCallback(async () => {
     const savedData = await editorCore.current.save();
-
-   props.editorjson(savedData,Parser(savedData.blocks))
-
-  //  const string = JSON.stringify(savedData)
-  //  if (typeof window !== 'undefined') {
-  //      localStorage.setItem('jsonblog', string);
-  //  }
-
-  }, [])
+    props.editorjson(savedData, edjsParser(savedData.blocks));
+  }, [props, edjsParser]);
 
   const handleReady = () => {
-    const editor = editorCore.current._editorJS; 
-    
+    const editor = editorCore.current._editorJS;
     new DragDrop(editor);
   };
- 
-    return (
-      <>
+
+  return (
+    <>
       <ReactEditorJS
-     onInitialize={handleInitialize}
-      onChange={handleSave}
+        onInitialize={handleInitialize}
+        onChange={handleSave}
         tools={EDITOR_JS_TOOLS}
-        onReady = {handleReady}
-        placeholder= 'Start Writing Your Content'
-      
+        onReady={handleReady}
+        placeholder='Start Writing Your Content'
         defaultValue={props.value}
-
       />
-      </>
-    );
-  }
+    </>
+  );
+}
 
-  export default MediumEditor
-
+export default MediumEditor;
