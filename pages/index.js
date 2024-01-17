@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import Link from "@mui/material/Link";
 //import Link from 'next/link';
-//import ModeToggle from "../components/toggle"
+import ModeToggle from "../components/toggle"
 import Head from "next/head";
 import { withRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -67,7 +67,7 @@ const Index = ({ router }) => {
       }
     });
 <div className="fixed bottom-0 right-0 m-4">
-      <ModeToggle />
+     
     </div>
     let skip = 0;
     let limit = 4;
